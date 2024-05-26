@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.bg-purple {
+  background-color: #6c63ff;
+}
+
+.text-purple {
+  color: #6c63ff;
+}
+
+.bg-black {
+  background-color: #252525;
+}
+
+.text-black {
+  color: #252525;
+}
+
+.border-black {
+  border: 1px solid #252525;
+}
+
+.border-purple {
+  border: 1px solid #6c63ff;
+}
