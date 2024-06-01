@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./App.css";
-import SearchIcon from "./svg/SearchIcon";
+import SearchIcon from "./public/icons/SearchIcon";
 import FilterBox from "./components/FilterBox/FilterBox";
+import DarkMood from "./components/FilterBox/DarkMood";
 
 function App() {
   const [isFocus, setIsFocus] = useState(false);
@@ -22,6 +23,7 @@ function App() {
           </div>
         </div>
         <FilterBox />
+        <DarkMood />
       </div>
     </div>
   );
