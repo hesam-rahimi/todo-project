@@ -1,9 +1,6 @@
-import { useEffect } from "react";
 import { FiMoon } from "react-icons/fi";
 import { GoSun } from "react-icons/go";
 const DarkMode = ({ darkMode, setDarkMode }) => {
-  useEffect(() => {}, []);
-
   const lightModeHandler = () => {
     setDarkMode(false);
     localStorage.setItem("darkMode", false);
