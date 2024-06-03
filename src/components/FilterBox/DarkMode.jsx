@@ -15,13 +15,15 @@ const DarkMode = ({ darkMode, setDarkMode }) => {
   };
   return (
     <div className="self-stretch cursor-pointer">
-      <div className="bg-primary h-full flex items-center rounded-md px-2.5">
-        {darkMode ? (
-          <GoSun className="!w-6 !h-6 text-white" onClick={lightModeHandler} />
-        ) : (
-          <FiMoon className="!w-6 !h-6 text-white" onClick={darkModeHandler} />
-        )}
-      </div>
+      {darkMode ? (
+        <div className="bg-primary h-full flex items-center rounded-md px-2.5" onClick={lightModeHandler}>
+          <GoSun className="!w-6 !h-6 text-white" />
+        </div>
+      ) : (
+        <div className="bg-primary h-full flex items-center rounded-md px-2.5" onClick={darkModeHandler}>
+          <FiMoon className="!w-6 !h-6 text-white" />
+        </div>
+      )}
     </div>
   );
 };
