@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import SearchIcon from "./public/icons/SearchIcon";
 import FilterBox from "./components/FilterBox/FilterBox";
-import DarkMode from "./components/FilterBox/DarkMode";
 import EmptyDarkIcon from "./public/icons/EmptyDarkIcon";
 import EmptyLightIcon from "./public/icons/EmptyLightIcon";
+import DarkMode from "./components/DarkMode/DarkMode";
+import TodoBox from "./components/TodoBox/TodoBox";
 
 function App() {
   const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem("darkMode")) ? true : false);
@@ -39,6 +40,7 @@ function App() {
           {darkMode ? <EmptyDarkIcon className="!w-96 !h-72" /> : <EmptyLightIcon className="!w-96 !h-72" />}
           <p className="text-center text-3xl dark:text-white text-secondary mt-4">Empty ...</p>
         </div>
+        <TodoBox />
       </div>
     </div>
   );
