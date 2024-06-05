@@ -1,6 +1,6 @@
-const CustomBtn = ({ text, className }) => {
+const CustomBtn = ({ text, className, onClick }) => {
   return (
-    <button className={`w-fit py-1.5 px-5 rounded-md ${className}`} type="button">
+    <button onClick={onClick} className={`w-fit py-1.5 px-5 rounded-md ${className}`} type="button">
       {text}
     </button>
   );

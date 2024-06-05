@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SearchIcon from "../../public/icons/SearchIcon";
 
-const CustomInput = ({ darkMode, searchIcon, className, placeholder }) => {
+const CustomInput = ({ darkMode, searchIcon, className, placeholder, value, setValue }) => {
   const [isFocus, setIsFocus] = useState(false);
 
   return (
@@ -9,6 +9,8 @@ const CustomInput = ({ darkMode, searchIcon, className, placeholder }) => {
       <input
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
         type="text"
         placeholder={placeholder}
         className={`w-full border-0 ring-0 outline-none bg-transparent ${darkMode ? "text-white" : "text-secondary"}`}
