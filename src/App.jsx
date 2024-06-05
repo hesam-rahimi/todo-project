@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import SearchIcon from "./public/icons/SearchIcon";
 import FilterBox from "./components/FilterBox/FilterBox";
 import EmptyDarkIcon from "./public/icons/EmptyDarkIcon";
 import EmptyLightIcon from "./public/icons/EmptyLightIcon";
 import DarkMode from "./components/DarkMode/DarkMode";
 import TodoBox from "./components/TodoBox/TodoBox";
+import AddTodoBtn from "./components/AddTodoBtn/AddTodoBtn";
+import AddTodoModal from "./components/AddTodoModal";
+import CustomInput from "./components/utils/CustomInput";
 
 function App() {
+  const [openFilterBox, setOpenFilterBox] = useState(false);
+  const [openAddTodoModal, setOpenAddTodoModal] = useState(false);
   const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem("darkMode")) ? true : false);
-  const [isFocus, setIsFocus] = useState(false);
 
   useEffect(() => {
     if (darkMode) document.documentElement.classList.add("dark");
@@ -17,23 +20,12 @@ function App() {
   }, [darkMode]);
 
   return (
-    <div className="h-screen m-0 p-0 bg-white dark:bg-secondary">
+    <div onClick={() => setOpenFilterBox(false)} className="h-screen m-0 p-0 bg-white dark:bg-secondary">
       <div className="p-10 flex flex-col items-center">
         <h2 className="mb-5 text-3xl font-semibold dark:text-white text-secondary">TODO LIST</h2>
         <div className="flex items-center w-full justify-center gap-x-5 mb-12">
-          <div className={`border border-primary py-2 px-4 gap-x-2 rounded-md flex justify-between w-5/12 ${isFocus && "ring-1 ring-primary"}`}>
-            <input
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
-              type="text"
-              className={`w-full border-0 ring-0 outline-none bg-transparent ${darkMode ? "text-white" : "text-secondary"}`}
-              placeholder="Search note..."
-            />
-            <div>
-              <SearchIcon className="text-primary cursor-pointer" />
-            </div>
-          </div>
-          <FilterBox />
+          <CustomInput darkMode={darkMode} className="w-5/12" searchIcon placeholder="Search note..." />
+          <FilterBox open={openFilterBox} setOpen={setOpenFilterBox} />
           <DarkMode darkMode={darkMode} setDarkMode={setDarkMode} />
         </div>
         <div>
@@ -42,6 +34,8 @@ function App() {
         </div>
         <TodoBox />
       </div>
+      <AddTodoBtn onClick={() => setOpenAddTodoModal(true)} />
+      <AddTodoModal open={openAddTodoModal} setOpen={setOpenAddTodoModal} darkMode={darkMode} />
     </div>
   );
 }
