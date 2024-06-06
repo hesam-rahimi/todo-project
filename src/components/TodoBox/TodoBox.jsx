@@ -2,7 +2,7 @@ import { useState } from "react";
 import EditIcon from "../../public/icons/EditIcon";
 import TrashIcon from "../../public/icons/TrashIcon";
 import { FaCheck } from "react-icons/fa";
-const TodoBox = () => {
+const TodoBox = ({ text }) => {
   const [showTodoDetail, setShowTodoDetail] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
 
@@ -18,7 +18,7 @@ const TodoBox = () => {
         >
           {isComplete ? <FaCheck className="text-white text-xl" /> : null}
         </div>
-        <p className="text-2xl font-semibold dark:text-white">NOTE #1</p>
+        <p className="text-2xl font-semibold dark:text-white">{text}</p>
       </div>
 
       <div className={`gap-2 ${showTodoDetail ? "flex" : "hidden"}`}>
