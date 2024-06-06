@@ -6,11 +6,10 @@ import ModalContainer from "./utils/ModalContainer";
 const AddTodoModal = ({ open, setOpen, darkMode, getAllTodo }) => {
   const [inputValue, setInputValue] = useState("");
   const todos = localStorage.getItem("todos") ? JSON.parse(localStorage.getItem("todos")) : [];
-  const id = useId();
 
   const addTodoHandler = () => {
     const newTodoInfo = {
-      id,
+      id: todos.length + 1,
       text: inputValue,
       isComplete: false,
     };

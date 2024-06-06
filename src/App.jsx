@@ -41,7 +41,7 @@ function App() {
         ) : (
           <div className="gap-y-6 w-full flex flex-col items-center">
             {todos.map((todo) => (
-              <TodoBox key={todo.id} text={todo.text} />
+              <TodoBox key={todo.id} {...todo} todos={todos} />
             ))}
           </div>
         )}
