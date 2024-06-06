@@ -1,18 +1,26 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import FilterBox from "./components/FilterBox/FilterBox";
-import EmptyDarkIcon from "./public/icons/EmptyDarkIcon";
-import EmptyLightIcon from "./public/icons/EmptyLightIcon";
 import DarkMode from "./components/DarkMode/DarkMode";
 import TodoBox from "./components/TodoBox/TodoBox";
 import AddTodoBtn from "./components/AddTodoBtn/AddTodoBtn";
 import AddTodoModal from "./components/AddTodoModal";
 import CustomInput from "./components/utils/CustomInput";
+import EmptyTodo from "./components/EmptyTodo/EmptyTodo";
 
 function App() {
   const [openFilterBox, setOpenFilterBox] = useState(false);
   const [openAddTodoModal, setOpenAddTodoModal] = useState(false);
   const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem("darkMode")) ? true : false);
+  const [todos, setTodos] = useState([]);
+
+  const getAllTodo = useCallback(() => {
+    localStorage.getItem("todos") ? setTodos(JSON.parse(localStorage.getItem("todos"))) : setTodos([]);
+  }, []);
+
+  useEffect(() => {
+    getAllTodo();
+  }, [getAllTodo]);
 
   useEffect(() => {
     if (darkMode) document.documentElement.classList.add("dark");
@@ -28,14 +36,18 @@ function App() {
           <FilterBox open={openFilterBox} setOpen={setOpenFilterBox} />
           <DarkMode darkMode={darkMode} setDarkMode={setDarkMode} />
         </div>
-        <div>
-          {darkMode ? <EmptyDarkIcon className="!w-96 !h-72" /> : <EmptyLightIcon className="!w-96 !h-72" />}
-          <p className="text-center text-3xl dark:text-white text-secondary mt-4">Empty ...</p>
-        </div>
-        <TodoBox />
+        {!todos?.length ? (
+          <EmptyTodo darkMode={darkMode} />
+        ) : (
+          <div className="gap-y-6 w-full flex flex-col items-center">
+            {todos.map((todo) => (
+              <TodoBox key={todo.id} text={todo.text} />
+            ))}
+          </div>
+        )}
       </div>
       <AddTodoBtn onClick={() => setOpenAddTodoModal(true)} />
-      <AddTodoModal open={openAddTodoModal} setOpen={setOpenAddTodoModal} darkMode={darkMode} />
+      <AddTodoModal getAllTodo={getAllTodo} open={openAddTodoModal} setOpen={setOpenAddTodoModal} darkMode={darkMode} />
     </div>
   );
 }
