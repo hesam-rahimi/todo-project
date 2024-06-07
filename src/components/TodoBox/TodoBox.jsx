@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import EditIcon from "../../public/icons/EditIcon";
 import TrashIcon from "../../public/icons/TrashIcon";
 import { FaCheck } from "react-icons/fa";
-const TodoBox = ({ text, isComplete, todos, id }) => {
+const TodoBox = ({ text, isComplete, todos, id, getAllTodo }) => {
   const [showTodoDetail, setShowTodoDetail] = useState(false);
   const [isCompleted, setIsCompleted] = useState(isComplete);
 
@@ -11,6 +11,12 @@ const TodoBox = ({ text, isComplete, todos, id }) => {
     mainTodo.isComplete = isCompleted;
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [id, isCompleted, todos]);
+
+  const deleteTodoHandler = () => {
+    const newTodos = todos.filter((todo) => todo.id !== id);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
+    getAllTodo();
+  };
 
   return (
     <div
@@ -26,14 +32,20 @@ const TodoBox = ({ text, isComplete, todos, id }) => {
         >
           {isCompleted ? <FaCheck className="text-white text-xl" /> : null}
         </div>
-        <p className="text-2xl font-semibold dark:text-white">{text}</p>
+        <p
+          className={`text-2xl ${
+            isCompleted ? "!text-secondary/50 dark:!text-[#FFFFFF]/50 line-through decoration-1" : "dark:text-white text-secondary"
+          }`}
+        >
+          {text}
+        </p>
       </div>
 
       <div className={`gap-2 ${showTodoDetail ? "flex" : "hidden"}`}>
         <div>
           <EditIcon className="!w-5 !h-5 hover:!stroke-primary cursor-pointer" />
         </div>
-        <div>
+        <div onClick={deleteTodoHandler}>
           <TrashIcon className="!w-5 !h-5 stroke-[#CDCDCD] hover:!stroke-red-600 !text-red-600 cursor-pointer" />
         </div>
       </div>

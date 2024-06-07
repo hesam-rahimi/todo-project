@@ -28,7 +28,7 @@ function App() {
   }, [darkMode]);
 
   return (
-    <div onClick={() => setOpenFilterBox(false)} className="h-screen m-0 p-0 bg-white dark:bg-secondary">
+    <div onClick={() => setOpenFilterBox(false)} className="min-h-svh m-0 p-0 bg-white dark:bg-secondary">
       <div className="p-10 flex flex-col items-center">
         <h2 className="mb-5 text-3xl font-semibold dark:text-white text-secondary">TODO LIST</h2>
         <div className="flex items-center w-full justify-center gap-x-5 mb-12">
@@ -39,9 +39,9 @@ function App() {
         {!todos?.length ? (
           <EmptyTodo darkMode={darkMode} />
         ) : (
-          <div className="gap-y-6 w-full flex flex-col items-center">
+          <div className="w-full gap-y-6 gap-x-5 flex-col flex justify-center items-center">
             {todos.map((todo) => (
-              <TodoBox key={todo.id} {...todo} todos={todos} />
+              <TodoBox key={todo.id} {...todo} todos={todos} getAllTodo={getAllTodo} />
             ))}
           </div>
         )}
