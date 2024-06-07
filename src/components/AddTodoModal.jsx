@@ -29,7 +29,14 @@ const AddTodoModal = ({ open, setOpen, darkMode, getAllTodo }) => {
   return (
     <ModalContainer title="new todo" open={open} setOpen={setOpen}>
       <div className="flex flex-col !h-4/5 justify-between">
-        <CustomInput darkMode={darkMode} placeholder="Input your note..." value={inputValue} setValue={setInputValue} />
+        <CustomInput
+          onEnter={addTodoHandler}
+          autoFocus={true}
+          darkMode={darkMode}
+          placeholder="Input your note..."
+          value={inputValue}
+          setValue={setInputValue}
+        />
         <div className="flex justify-between items-center">
           <CustomBtn text="CANCEL" className="border-primary border dark:text-white" onClick={closeModal} />
           <CustomBtn text="APPLY" className="bg-primary text-white border-primary border" onClick={addTodoHandler} />
