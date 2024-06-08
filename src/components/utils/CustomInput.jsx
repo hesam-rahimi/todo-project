@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SearchIcon from "../../public/icons/SearchIcon";
 
-const CustomInput = ({ darkMode, searchIcon, className, placeholder, value, setValue, autoFocus = false, onEnter }) => {
+const CustomInput = ({ searchIcon, className, placeholder, value, setValue, autoFocus = false, onEnter }) => {
   const [isFocus, setIsFocus] = useState(false);
   const onEnterHandler = (event) => event.keyCode === 13 && onEnter();
   return (
@@ -15,7 +15,7 @@ const CustomInput = ({ darkMode, searchIcon, className, placeholder, value, setV
         onChange={(event) => setValue(event.target.value)}
         type="text"
         placeholder={placeholder}
-        className={`w-full border-0 ring-0 outline-none bg-transparent ${darkMode ? "text-white" : "text-secondary"}`}
+        className="w-full border-0 ring-0 outline-none bg-transparent text-secondary dark:text-white"
       />
 
       {searchIcon && (

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import CustomBtn from "./utils/CustomBtn";
-import CustomInput from "./utils/CustomInput";
-import ModalContainer from "./utils/ModalContainer";
+import CustomBtn from "../utils/CustomBtn";
+import CustomInput from "../utils/CustomInput";
+import ModalContainer from "../utils/ModalContainer";
 
-const AddTodoModal = ({ open, setOpen, darkMode, getAllTodo }) => {
+const AddTodoModal = ({ open, setOpen, getAllTodo }) => {
   const [inputValue, setInputValue] = useState("");
   const todos = localStorage.getItem("todos") ? JSON.parse(localStorage.getItem("todos")) : [];
 
@@ -29,14 +29,7 @@ const AddTodoModal = ({ open, setOpen, darkMode, getAllTodo }) => {
   return (
     <ModalContainer title="new todo" open={open} setOpen={setOpen}>
       <div className="flex flex-col !h-4/5 justify-between">
-        <CustomInput
-          onEnter={addTodoHandler}
-          autoFocus={true}
-          darkMode={darkMode}
-          placeholder="Input your note..."
-          value={inputValue}
-          setValue={setInputValue}
-        />
+        <CustomInput onEnter={addTodoHandler} autoFocus={true} placeholder="Input your note..." value={inputValue} setValue={setInputValue} />
         <div className="flex justify-between items-center">
           <CustomBtn text="CANCEL" className="border-primary border dark:text-white" onClick={closeModal} />
           <CustomBtn text="APPLY" className="bg-primary text-white border-primary border" onClick={addTodoHandler} />
