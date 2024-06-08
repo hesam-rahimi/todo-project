@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import EditIcon from "../../public/icons/EditIcon";
 import TrashIcon from "../../public/icons/TrashIcon";
 import { FaCheck } from "react-icons/fa";
+import EditTodoModal from "../EditTodoModal/EditTodoModal";
 const TodoBox = ({ text, isComplete, todos, id, getAllTodo }) => {
   const [showTodoDetail, setShowTodoDetail] = useState(false);
   const [isCompleted, setIsCompleted] = useState(isComplete);
-
+  const [openEditModal, setOpenEditModal] = useState(false);
   useEffect(() => {
     const mainTodo = todos.find((todo) => todo.id === id);
     mainTodo.isComplete = isCompleted;
@@ -42,13 +43,14 @@ const TodoBox = ({ text, isComplete, todos, id, getAllTodo }) => {
       </div>
 
       <div className={`gap-2 ${showTodoDetail ? "flex" : "hidden"}`}>
-        <div>
+        <div onClick={() => setOpenEditModal(true)}>
           <EditIcon className="!w-5 !h-5 hover:!stroke-primary cursor-pointer" />
         </div>
         <div onClick={deleteTodoHandler}>
           <TrashIcon className="!w-5 !h-5 stroke-[#CDCDCD] hover:!stroke-red-600 !text-red-600 cursor-pointer" />
         </div>
       </div>
+      <EditTodoModal todo={{ text, id }} open={openEditModal} setOpen={setOpenEditModal} getAllTodo={getAllTodo} />
     </div>
   );
 };
