@@ -11,7 +11,7 @@ import EmptyTodo from "./components/EmptyTodo/EmptyTodo";
 function App() {
   const [openFilterBox, setOpenFilterBox] = useState(false);
   const [openAddTodoModal, setOpenAddTodoModal] = useState(false);
-  const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem("darkMode")) ? true : false);
+  const [darkMode, setDarkMode] = useState(false);
   const [todos, setTodos] = useState([]);
 
   const getAllTodo = useCallback(() => {
@@ -23,6 +23,11 @@ function App() {
   }, [getAllTodo]);
 
   useEffect(() => {
+    localStorage.getItem("darkMode")
+      ? JSON.parse(localStorage.getItem("darkMode")) === true
+        ? setDarkMode(true)
+        : setDarkMode(false)
+      : localStorage.setItem("darkMode", true);
     if (darkMode) document.documentElement.classList.add("dark");
     else document.documentElement.classList.remove("dark");
   }, [darkMode]);
