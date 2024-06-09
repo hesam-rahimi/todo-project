@@ -1,14 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChevronDown from "../../public/icons/ChevronDown";
 
-const FilterBox = ({ open, setOpen }) => {
-  const [mainFilter, setMainFilter] = useState("All");
+const options = [
+  { id: 1, name: "All" },
+  { id: 2, name: "Complete" },
+  { id: 3, name: "Incomplete" },
+];
+const FilterBox = ({ open, setOpen, todos, setFilteredTodos }) => {
+  const [mainFilter, setMainFilter] = useState(options[0]);
 
-  const options = [
-    { id: 1, name: "All" },
-    { id: 2, name: "Complete" },
-    { id: 3, name: "Incomplete" },
-  ];
+  useEffect(() => {
+    switch (mainFilter.id) {
+      case 1:
+        setFilteredTodos([...todos]);
+        break;
+      case 2:
+        setFilteredTodos([...todos].filter((todo) => todo.isComplete === true));
+        break;
+      case 3:
+        setFilteredTodos([...todos].filter((todo) => todo.isComplete === false));
+        break;
+    }
+  }, [mainFilter, setFilteredTodos, todos]);
+
   return (
     <div className="self-stretch relative">
       <div
@@ -18,7 +32,7 @@ const FilterBox = ({ open, setOpen }) => {
         }}
         className="cursor-pointer text-white bg-primary flex justify-between items-center h-full min-w-40 px-2 rounded-md"
       >
-        <span className="font-bold text-base">{mainFilter.toUpperCase()}</span>
+        <span className="font-bold text-base">{mainFilter.name.toUpperCase()}</span>
 
         {open ? (
           <ChevronDown className="!w-4 !h-4 rotate-180 transition-all duration-200" />
@@ -29,9 +43,9 @@ const FilterBox = ({ open, setOpen }) => {
       <div className={`bg-white w-full py-2 rounded-md border border-primary absolute top-12 ${open ? "showFilterBox" : "hidden"}`}>
         {options.map((item) => (
           <div
-            className={`${item.name == mainFilter && "bg-primary/30"} pl-2 p-0.5 text-primary ${open && "cursor-pointer"}`}
+            className={`${item.name == mainFilter.name && "bg-primary/30"} pl-2 p-0.5 text-primary ${open && "cursor-pointer"}`}
             key={item.id}
-            onClick={() => open && setMainFilter(item.name)}
+            onClick={() => open && setMainFilter(item)}
           >
             {item.name}
           </div>

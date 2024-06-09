@@ -3,7 +3,7 @@ import EditIcon from "../../public/icons/EditIcon";
 import TrashIcon from "../../public/icons/TrashIcon";
 import { FaCheck } from "react-icons/fa";
 import EditTodoModal from "../EditTodoModal/EditTodoModal";
-const TodoBox = ({ text, isComplete, todos, id, getAllTodo }) => {
+const TodoBox = ({ text, isComplete, todos, id, getAllTodo, setTodos }) => {
   const [showTodoDetail, setShowTodoDetail] = useState(false);
   const [isCompleted, setIsCompleted] = useState(isComplete);
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -11,7 +11,8 @@ const TodoBox = ({ text, isComplete, todos, id, getAllTodo }) => {
     const mainTodo = todos.find((todo) => todo.id === id);
     mainTodo.isComplete = isCompleted;
     localStorage.setItem("todos", JSON.stringify(todos));
-  }, [id, isCompleted, todos]);
+    getAllTodo();
+  }, [getAllTodo, id, isCompleted, todos]);
 
   const deleteTodoHandler = () => {
     const newTodos = todos.filter((todo) => todo.id !== id);

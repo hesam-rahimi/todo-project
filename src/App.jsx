@@ -15,6 +15,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [searchedTodo, setSearchedTodo] = useState();
   const [searchValue, setSearchValue] = useState("");
+  const [filteredTodos, setFilteredTodos] = useState([]);
   const getAllTodo = useCallback(() => {
     localStorage.getItem("todos") ? setTodos(JSON.parse(localStorage.getItem("todos"))) : setTodos([]);
     localStorage.getItem("todos") ? setSearchedTodo(JSON.parse(localStorage.getItem("todos"))) : setSearchedTodo([]);
@@ -55,15 +56,21 @@ function App() {
             // setValue={setSearchValue}
             onChange={onSearchHandler}
           />
-          <FilterBox open={openFilterBox} setOpen={setOpenFilterBox} />
+          <FilterBox
+            open={openFilterBox}
+            setOpen={setOpenFilterBox}
+            filteredTodos={filteredTodos}
+            setFilteredTodos={setFilteredTodos}
+            todos={todos}
+          />
           <DarkMode darkMode={darkMode} setDarkMode={setDarkMode} />
         </div>
-        {!searchedTodo?.length ? (
+        {!filteredTodos?.length ? (
           <EmptyTodo darkMode={darkMode} />
         ) : (
           <div className="w-full gap-y-6 gap-x-5 flex-col flex justify-center items-center">
-            {searchedTodo.map((todo) => (
-              <TodoBox key={todo.id} {...todo} todos={todos} getAllTodo={getAllTodo} />
+            {filteredTodos.map((todo) => (
+              <TodoBox setTodos={setTodos} key={todo.id} {...todo} todos={todos} getAllTodo={getAllTodo} />
             ))}
           </div>
         )}
