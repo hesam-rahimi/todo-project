@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomBtn from "../utils/CustomBtn";
 import CustomInput from "../utils/CustomInput";
 import ModalContainer from "../utils/ModalContainer";
@@ -6,11 +6,20 @@ import ModalContainer from "../utils/ModalContainer";
 const EditTodoModal = ({ open, setOpen, getAllTodo, todo }) => {
   const [inputValue, setInputValue] = useState(todo.text);
   const todos = localStorage.getItem("todos") ? JSON.parse(localStorage.getItem("todos")) : [];
+  const mainTodo = todos.find((item) => item.id === todo.id);
 
-  const editTodoHandler = () => {};
+  const editTodoHandler = () => {
+    mainTodo.text = inputValue;
+    console.log(mainTodo);
+    console.log(todos);
+    localStorage.setItem("todos", JSON.stringify(todos));
+    setOpen(false);
+    getAllTodo();
+  };
 
   const closeModal = () => {
     setOpen(false);
+    setInputValue(todo.text);
   };
 
   return (
