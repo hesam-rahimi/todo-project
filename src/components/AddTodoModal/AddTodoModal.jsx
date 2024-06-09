@@ -8,7 +8,7 @@ const AddTodoModal = ({ open, setOpen, getAllTodo }) => {
   const todos = localStorage.getItem("todos") ? JSON.parse(localStorage.getItem("todos")) : [];
 
   const addTodoHandler = () => {
-    if (inputValue.length) {
+    if (inputValue.trim().length) {
       const newTodoInfo = {
         id: todos.length + 1,
         text: inputValue,
