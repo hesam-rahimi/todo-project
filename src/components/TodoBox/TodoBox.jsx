@@ -7,12 +7,14 @@ const TodoBox = ({ text, isComplete, todos, id, getAllTodo, setTodos }) => {
   const [showTodoDetail, setShowTodoDetail] = useState(false);
   const [isCompleted, setIsCompleted] = useState(isComplete);
   const [openEditModal, setOpenEditModal] = useState(false);
+
   useEffect(() => {
     const mainTodo = todos.find((todo) => todo.id === id);
-    mainTodo.isComplete = isCompleted;
-    localStorage.setItem("todos", JSON.stringify(todos));
-    getAllTodo();
-  }, [getAllTodo, id, isCompleted, todos]);
+    if (mainTodo) {
+      mainTodo.isComplete = isCompleted;
+      localStorage.setItem("todos", JSON.stringify(todos));
+    }
+  }, [id, isCompleted, todos]);
 
   const deleteTodoHandler = () => {
     const newTodos = todos.filter((todo) => todo.id !== id);
