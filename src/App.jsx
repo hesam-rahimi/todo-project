@@ -16,6 +16,7 @@ function App() {
   const [searchedTodo, setSearchedTodo] = useState();
   const [searchValue, setSearchValue] = useState("");
   const [filteredTodos, setFilteredTodos] = useState([]);
+
   const getAllTodo = useCallback(() => {
     localStorage.getItem("todos") ? setTodos(JSON.parse(localStorage.getItem("todos"))) : setTodos([]);
     localStorage.getItem("todos") ? setSearchedTodo(JSON.parse(localStorage.getItem("todos"))) : setSearchedTodo([]);

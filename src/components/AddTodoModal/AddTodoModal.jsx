@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import CustomBtn from "../utils/CustomBtn";
 import CustomInput from "../utils/CustomInput";
 import ModalContainer from "../utils/ModalContainer";
@@ -6,11 +6,11 @@ import ModalContainer from "../utils/ModalContainer";
 const AddTodoModal = ({ open, setOpen, getAllTodo }) => {
   const [inputValue, setInputValue] = useState("");
   const todos = localStorage.getItem("todos") ? JSON.parse(localStorage.getItem("todos")) : [];
-
+  const id = useId();
   const addTodoHandler = () => {
     if (inputValue.trim().length) {
       const newTodoInfo = {
-        id: todos.length + 1,
+        id: id + todos.length + 1 + inputValue,
         text: inputValue,
         isComplete: false,
       };
