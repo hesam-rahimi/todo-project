@@ -20,8 +20,10 @@ const FilterBox = ({ open, setOpen, todos, setFilteredTodos }) => {
       case 3:
         setFilteredTodos([...todos].filter((todo) => todo.isComplete === false));
         break;
+      default:
+        setFilteredTodos([...todos]);
     }
-  }, [mainFilter, setFilteredTodos, todos]);
+  }, [mainFilter.id, setFilteredTodos, todos]);
 
   return (
     <div className="self-stretch relative">

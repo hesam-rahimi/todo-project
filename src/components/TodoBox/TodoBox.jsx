@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import EditIcon from "../../public/icons/EditIcon";
 import TrashIcon from "../../public/icons/TrashIcon";
 import { FaCheck } from "react-icons/fa";
 import EditTodoModal from "../EditTodoModal/EditTodoModal";
 const TodoBox = ({ text, isComplete, todos, id, getAllTodo, setTodos }) => {
   const [showTodoDetail, setShowTodoDetail] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(isComplete);
   const [openEditModal, setOpenEditModal] = useState(false);
 
-  useEffect(() => {
+  const changeStatusHandler = (status) => {
     const mainTodo = todos.find((todo) => todo.id === id);
     if (mainTodo) {
-      mainTodo.isComplete = isCompleted;
+      mainTodo.isComplete = !status;
       localStorage.setItem("todos", JSON.stringify(todos));
+      getAllTodo();
     }
-  }, [id, isCompleted, todos]);
+  };
 
   const deleteTodoHandler = () => {
     const newTodos = todos.filter((todo) => todo.id !== id);
@@ -28,17 +28,15 @@ const TodoBox = ({ text, isComplete, todos, id, getAllTodo, setTodos }) => {
       onMouseEnter={() => setShowTodoDetail(true)}
       onMouseLeave={() => setShowTodoDetail(false)}
     >
-      <div className="flex cursor-pointer w-[90%]" onClick={() => setIsCompleted((prev) => !prev)}>
+      <div className="flex cursor-pointer w-[90%]" onClick={() => changeStatusHandler(isComplete)}>
         <div
-          className={`border-primary border w-8 h-8 rounded-sm mr-4 flex justify-center items-center ${
-            isCompleted ? "bg-primary" : "bg-transparent"
-          }`}
+          className={`border-primary border w-8 h-8 rounded-sm mr-4 flex justify-center items-center ${isComplete ? "bg-primary" : "bg-transparent"}`}
         >
-          {isCompleted ? <FaCheck className="text-white text-xl" /> : null}
+          {isComplete ? <FaCheck className="text-white text-xl" /> : null}
         </div>
         <p
           className={`text-2xl ${
-            isCompleted ? "!text-secondary/50 dark:!text-[#FFFFFF]/50 line-through decoration-1" : "dark:text-white text-secondary"
+            isComplete ? "!text-secondary/50 dark:!text-[#FFFFFF]/50 line-through decoration-1" : "dark:text-white text-secondary"
           }`}
         >
           {text}
