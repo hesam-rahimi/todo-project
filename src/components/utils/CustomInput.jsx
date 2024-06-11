@@ -7,7 +7,7 @@ const CustomInput = ({ searchIcon, className, placeholder, value, setValue, auto
 
   const onChangeHandler = (event) => {
     onChange && onChange(event.target.value);
-    setValue(event.target.value);
+    setValue && setValue(event.target.value);
   };
 
   return (
