@@ -13,15 +13,16 @@ function App() {
   const [openAddTodoModal, setOpenAddTodoModal] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [todos, setTodos] = useState([]);
-  const [searchedTodo, setSearchedTodo] = useState();
+  const [searchedTodo, setSearchedTodo] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [filteredTodos, setFilteredTodos] = useState([]);
 
   const getAllTodo = useCallback(() => {
     localStorage.getItem("todos") ? setTodos(JSON.parse(localStorage.getItem("todos"))) : setTodos([]);
-    localStorage.getItem("todos") ? setSearchedTodo(JSON.parse(localStorage.getItem("todos"))) : setSearchedTodo([]);
     setSearchValue("");
   }, []);
+
+  useEffect(() => setSearchValue(""), [filteredTodos]);
 
   useEffect(() => {
     getAllTodo();
@@ -30,7 +31,7 @@ function App() {
 
   const onSearchHandler = (value) => {
     setSearchValue(value);
-    const result = todos.filter((todo) => todo.text.includes(value));
+    const result = filteredTodos.filter((todo) => todo.text.includes(value));
     setSearchedTodo(result);
   };
 
@@ -49,28 +50,22 @@ function App() {
       <div className="p-10 flex flex-col items-center">
         <h2 className="mb-5 text-3xl font-semibold dark:text-white text-secondary">TODO LIST</h2>
         <div className="flex items-center w-full justify-center gap-x-5 mb-12">
-          <CustomInput
-            className="w-5/12"
-            searchIcon
-            placeholder="Search note..."
-            value={searchValue}
-            // setValue={setSearchValue}
-            onChange={onSearchHandler}
-          />
+          <CustomInput className="w-5/12" searchIcon placeholder="Search note..." value={searchValue} onChange={onSearchHandler} />
           <FilterBox
             open={openFilterBox}
             setOpen={setOpenFilterBox}
             filteredTodos={filteredTodos}
             setFilteredTodos={setFilteredTodos}
+            setSearchedTodo={setSearchedTodo}
             todos={todos}
           />
           <DarkMode darkMode={darkMode} setDarkMode={setDarkMode} />
         </div>
-        {!filteredTodos?.length ? (
+        {!searchedTodo?.length ? (
           <EmptyTodo darkMode={darkMode} />
         ) : (
           <div className="w-full gap-y-6 gap-x-5 flex-col flex justify-center items-center">
-            {filteredTodos.map((todo) => (
+            {searchedTodo.map((todo) => (
               <TodoBox setTodos={setTodos} key={todo.id} {...todo} todos={todos} getAllTodo={getAllTodo} />
             ))}
           </div>

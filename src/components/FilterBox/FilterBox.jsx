@@ -6,24 +6,27 @@ const options = [
   { id: 2, name: "Complete" },
   { id: 3, name: "Incomplete" },
 ];
-const FilterBox = ({ open, setOpen, todos, setFilteredTodos }) => {
+const FilterBox = ({ open, setOpen, todos, setFilteredTodos, setSearchedTodo }) => {
   const [mainFilter, setMainFilter] = useState(options[0]);
 
   useEffect(() => {
     switch (mainFilter.id) {
       case 1:
         setFilteredTodos([...todos]);
+        setSearchedTodo([...todos]);
         break;
       case 2:
         setFilteredTodos([...todos].filter((todo) => todo.isComplete === true));
+        setSearchedTodo([...todos].filter((todo) => todo.isComplete === true));
         break;
       case 3:
         setFilteredTodos([...todos].filter((todo) => todo.isComplete === false));
+        setSearchedTodo([...todos].filter((todo) => todo.isComplete === false));
         break;
       default:
         setFilteredTodos([...todos]);
     }
-  }, [mainFilter.id, setFilteredTodos, todos]);
+  }, [mainFilter.id, setFilteredTodos, setSearchedTodo, todos]);
 
   return (
     <div className="self-stretch relative">
